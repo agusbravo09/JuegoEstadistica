@@ -1,33 +1,93 @@
+// Elementos del DOM
 const rollBtn = document.getElementById("rollBtn");
 const resetBtn = document.getElementById("resetBtn");
 const resultText = document.getElementById("resultText");
-const dice1Img = document.getElementById("dice1Img");
-const dice2Img = document.getElementById("dice2Img");
+const totalBetType = document.getElementById("totalBetType");
+const exactBetType = document.getElementById("exactBetType");
+const betSectionTitle = document.getElementById("betSectionTitle");
+const totalBetSection = document.getElementById("totalBetSection");
+const exactBetSection = document.getElementById("exactBetSection");
+const die1 = document.getElementById("die1");
+const die2 = document.getElementById("die2");
 
 // Estadísticas
 let stats = {
-  balance: 0,
+  balance: 100,
   plays: 0,
   wins: 0,
-  bestBalance: 0,
-  expectedValue: -0.5 // valor esperado teórico dado
+  bestBalance: 100,
+  expectedValue: -0.5
 };
 
+// Inicialización
+updateStats();
+
+// Manejadores de tipo de apuesta
+totalBetType.addEventListener("change", () => {
+  if (totalBetType.checked) {
+    betSectionTitle.textContent = "Haz tu apuesta por total";
+    totalBetSection.style.display = "block";
+    exactBetSection.style.display = "none";
+  }
+});
+
+exactBetType.addEventListener("change", () => {
+  if (exactBetType.checked) {
+    betSectionTitle.textContent = "Haz tu apuesta exacta";
+    totalBetSection.style.display = "none";
+    exactBetSection.style.display = "block";
+  }
+});
+
+// Funciones del juego
 function rollDie() {
   return Math.floor(Math.random() * 6) + 1;
 }
 
 function biasedRoll(multiplier = 0.3) {
-  return Math.random() < multiplier ? [rollDie(), rollDie()] : [rollDie(), rollDie()];
+  if (Math.random() < multiplier) {
+    const totalBet = parseInt(document.getElementById("totalBet").value);
+    const dice1Bet = parseInt(document.getElementById("dice1Bet").value);
+    const dice2Bet = parseInt(document.getElementById("dice2Bet").value);
+    
+    let die1, die2;
+    do {
+      die1 = rollDie();
+      die2 = rollDie();
+    } while (
+      (totalBetType.checked && (die1 + die2) === totalBet) ||
+      (exactBetType.checked && die1 === dice1Bet && die2 === dice2Bet)
+    );
+    
+    return [die1, die2];
+  }
+  return [rollDie(), rollDie()];
 }
 
+function rotateDie(dieElement, value) {
+  const rotations = {
+    1: "rotateX(0deg) rotateY(0deg)",        // front (1)
+    2: "rotateX(-90deg) rotateY(0deg)",      // bottom (2)
+    3: "rotateY(-90deg) rotateX(0deg)",      // left (3)
+    4: "rotateY(90deg) rotateX(0deg)",       // right (4)
+    5: "rotateX(90deg) rotateY(0deg)",       // top (5)
+    6: "rotateX(180deg) rotateY(0deg)"       // back (6)
+  };
+
+  dieElement.style.transform = rotations[value];
+}
+
+
 function updateStats(win, reward) {
-  stats.plays++;
-  if (win) stats.wins++;
-  stats.balance += reward;
-  if (stats.balance > stats.bestBalance) stats.bestBalance = stats.balance;
-  const avg = (stats.balance / stats.plays).toFixed(2);
-  const winPct = ((stats.wins / stats.plays) * 100).toFixed(1);
+  if (win !== undefined && reward !== undefined) {
+    stats.plays++;
+    if (win) stats.wins++;
+    stats.balance += reward;
+    if (stats.balance > stats.bestBalance) stats.bestBalance = stats.balance;
+  }
+
+  const avg = (stats.balance / (stats.plays || 1)).toFixed(2);
+  const winPct = ((stats.wins / (stats.plays || 1)) * 100).toFixed(1);
   const lossPct = (100 - winPct).toFixed(1);
   const diff = (avg - stats.expectedValue).toFixed(2);
 
@@ -41,43 +101,74 @@ function updateStats(win, reward) {
   document.getElementById("empiricalDiff").textContent = diff;
 }
 
+// Evento de lanzamiento de dados
 rollBtn.addEventListener("click", () => {
-  const totalBet = parseInt(document.getElementById("totalBet").value);
-  const dice1Bet = parseInt(document.getElementById("dice1Bet").value);
-  const dice2Bet = parseInt(document.getElementById("dice2Bet").value);
+  const isTotalBet = totalBetType.checked;
+  let totalBet, dice1Bet, dice2Bet;
 
-  const [die1, die2] = biasedRoll(0.3);
-  const total = die1 + die2;
-
-  dice1Img.src = `assets/dice${die1}.png`;
-  dice2Img.src = `assets/dice${die2}.png`;
-
-  let result = `Salió ${die1} y ${die2} (Total: ${total}). `;
-  let win = false;
-  let reward = -1; // cada jugada cuesta 1
-
-  if (!isNaN(totalBet) && total === totalBet) {
-    reward = 5; // pago por acertar total
-    result += "¡Ganaste por total! ";
-    win = true;
+  if (isTotalBet) {
+    totalBet = parseInt(document.getElementById("totalBet").value);
+    if (isNaN(totalBet) || totalBet < 2 || totalBet > 12) {
+      resultText.textContent = "⚠️ Por favor ingresa un total válido (2-12)";
+      return;
+    }
+  } else {
+    dice1Bet = parseInt(document.getElementById("dice1Bet").value);
+    dice2Bet = parseInt(document.getElementById("dice2Bet").value);
+    if (isNaN(dice1Bet) || isNaN(dice2Bet) || dice1Bet < 1 || dice1Bet > 6 || dice2Bet < 1 || dice2Bet > 6) {
+      resultText.textContent = "⚠️ Por favor ingresa valores válidos para los dados (1-6)";
+      return;
+    }
   }
 
-  if (!isNaN(dice1Bet) && !isNaN(dice2Bet) && die1 === dice1Bet && die2 === dice2Bet) {
-    reward = 10; // pago mayor por dados exactos
-    result += "¡Ganaste por dados! ";
-    win = true;
+  if (stats.balance < 1) {
+    resultText.textContent = "¡No tienes suficiente saldo! Reinicia el juego para empezar de nuevo.";
+    return;
   }
 
-  if (!win) {
-    result += "Perdiste esta vez.";
-  }
+  // Animación de lanzamiento
+  die1.classList.add("rolling");
+  die2.classList.add("rolling");
+  rollBtn.disabled = true;
+  resultText.textContent = "Los dados están girando...";
 
-  resultText.textContent = result;
-  updateStats(win, reward - 1); // resta la apuesta inicial
+  setTimeout(() => {
+    const [die1Result, die2Result] = biasedRoll(0.3);
+    const total = die1Result + die2Result;
+
+    // Detener animación y mostrar resultado
+    die1.classList.remove("rolling");
+    die2.classList.remove("rolling");
+    rotateDie(die1, die1Result);
+    rotateDie(die2, die2Result);
+
+    let result = `Salió ${die1Result} y ${die2Result} (Total: ${total}). `;
+    let win = false;
+    let reward = -1; // Costo base por jugar
+
+    if (isTotalBet && total === totalBet) {
+      reward = 5;
+      result += "¡Ganaste $5 por acertar el total! ";
+      win = true;
+    } else if (!isTotalBet && die1Result === dice1Bet && die2Result === dice2Bet) {
+      reward = 10;
+      result += "¡Ganaste $10 por acertar los dados exactos! ";
+      win = true;
+    } else {
+      result += "Perdiste $1 esta vez.";
+    }
+
+    resultText.textContent = result;
+    updateStats(win, reward);
+    rollBtn.disabled = false;
+  }, 1500);
 });
 
+// Reinicio del juego
 resetBtn.addEventListener("click", () => {
-  stats = { balance: 0, plays: 0, wins: 0, bestBalance: 0, expectedValue: -0.5 };
-  resultText.textContent = "";
-  updateStats(false, 0);
+  stats = { balance: 100, plays: 0, wins: 0, bestBalance: 100, expectedValue: -0.5 };
+  resultText.textContent = "Juego reiniciado. ¡Buena suerte!";
+  rotateDie(die1, 1);
+  rotateDie(die2, 1);
+  updateStats();
 });

@@ -11,18 +11,38 @@
     <h1>🎲 Juego de Dados Tramposo</h1>
 
     <p class="description">
-      Apuesta por el total de los dados o por los valores exactos. ¡Pero cuidado! Este juego está diseñado para que la <strong>banca gane a largo plazo</strong> 😈.
+      Apostá por el total de los dados o por los valores exactos. ¡Pero cuidado! Este juego está diseñado para que la <strong>banca gane a largo plazo</strong> 😈.
     </p>
 
-    <section class="bet-section">
-      <h2>Haz tu apuesta</h2>
+    <section class="bet-type-section">
+      <h2>Selecciona tu tipo de apuesta</h2>
+      <div class="bet-types">
+        <div class="bet-option">
+          <input type="radio" id="totalBetType" name="betType" value="total" checked>
+          <label for="totalBetType">Apostá por total</label>
+          <div class="bet-explanation">
+            Ganás si la suma de ambos dados coincide con tu apuesta. Paga 5:1.
+          </div>
+        </div>
+        <div class="bet-option">
+          <input type="radio" id="exactBetType" name="betType" value="exact">
+          <label for="exactBetType">Apuesta exacta</label>
+          <div class="bet-explanation">
+            Ganás si ambos dados coinciden exactamente con tus números. Paga 10:1.
+          </div>
+        </div>
+      </div>
+    </section>
 
-      <div>
-        <label for="totalBet">Apuesta por el total (2 a 12):</label>
+    <section class="bet-section">
+      <h2 id="betSectionTitle">Hace tu apuesta por total</h2>
+
+      <div id="totalBetSection">
+        <label for="totalBet">Apostá por el total (2 a 12):</label>
         <input type="number" id="totalBet" min="2" max="12"/>
       </div>
 
-      <div>
+      <div id="exactBetSection" style="display: none;">
         <label for="dice1Bet">Dado 1:</label>
         <input type="number" id="dice1Bet" min="1" max="6"/>
         <label for="dice2Bet">Dado 2:</label>
@@ -33,14 +53,30 @@
       <button id="resetBtn">Reiniciar Juego</button>
     </section>
 
-    <section class="result-section">
-      <h2>Resultado</h2>
-      <div class="dice">
-        <img id="dice1Img" src="assets/dice1.png" alt="Dado 1"/>
-        <img id="dice2Img" src="assets/dice1.png" alt="Dado 2"/>
+<section class="result-section">
+  <h2>Resultado (bug con dados y resultados)</h2>
+  <div class="dice-container">
+    <div class="dice-3d">
+      <div class="die" id="die1">
+        <div class="face front">1</div>
+        <div class="face back">6</div>
+        <div class="face right">4</div>
+        <div class="face left">3</div>
+        <div class="face top">5</div>
+        <div class="face bottom">2</div>
       </div>
-      <p id="resultText"></p>
-    </section>
+      <div class="die" id="die2">
+        <div class="face front">1</div>
+        <div class="face back">6</div>
+        <div class="face right">4</div>
+        <div class="face left">3</div>
+        <div class="face top">5</div>
+        <div class="face bottom">2</div>
+      </div>
+    </div>
+  </div>
+  <p id="resultText"></p>
+</section>
 
     <section class="stats-section">
       <h2>Estadísticas</h2>
@@ -57,7 +93,7 @@
     </section>
 
     <section class="warning">
-      <p><strong>⚠️ Advertencia:</strong> Aunque parezca que puedes ganar, este juego siempre favorece a la banca. A largo plazo, ¡perderás más de lo que ganarás! 📉</p>
+      <p><strong>⚠️ Advertencia:</strong> Aunque parezca que podés ganar, este juego siempre favorece a la banca. A largo plazo, ¡perdés más de lo que ganás! 📉</p>
     </section>
   </main>
 
