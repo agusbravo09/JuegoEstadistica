@@ -7,6 +7,26 @@ Un simulador interactivo que demuestra estadísticamente cómo los juegos de aza
   <img src="https://media.tenor.com/OSvXx8hEwgcAAAAj/nyan-cat-cat.gif" width="200">
 </div>
 
+## 🧑‍💻 Equipo - Grupo 1 (Comisión A)
+
+**"Los arquitectos de la derrota... digo, del aprendizaje probabilístico"**  
+
+| Integrante          | Rol                            | Emblema               |
+|---------------------|--------------------------------|-----------------------|
+| Benjamín Aquino    | Especialista de Accesibilidad   | ♿ El Hot Wheels      |
+| Agustín Bravo      | Dev Lead                        | 😎 El patrón          |
+| Matías Coppes      | Logistica de infusiones         | 🧉 El de los mates    |
+| Valentín Delfín    | Diseñador Front-End             | ✍️ El del pinturillo  |
+| Martín Mansilla    | El Iluminado                    | 💡 El de la idea      |
+| Gregorio Martin    | Dev Lead                        | 😎 El otro patrón     |
+| Luciano Pérez      | QA Tester                       | 🛠️ El que rompe todo  |
+
+*"Un dream team que hizo perder más del 85% de las pruebas beta (como debe ser)"*  
+
+💡 **Dato curioso**: Cada rol fue asignado basado en un riguroso proceso de... *"uh, tú haz esto que se te da bien"* (mirá como me fallo chatgpt).
+*"Toda apuesta es un ejercicio de fe... excepto esta, que es un ejercicio de demostración"*
+***Jugar compulsivamente puede afectar la salud (pero en este caso no xd)***
+
 ## 🔥 Características Destacadas
 
 - **Mecánica tramposa**:  
