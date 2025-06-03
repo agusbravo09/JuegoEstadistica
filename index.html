@@ -16,6 +16,7 @@
 
     <section class="bet-type-section">
       <h2>Selecciona tu tipo de apuesta</h2>
+      <p class="note">💡 Hacé clic sobre los titulos para seleccionar una opción.</p>
       <div class="bet-types">
         <div class="bet-option">
           <input type="radio" id="totalBetType" name="betType" value="total" checked>
@@ -53,30 +54,14 @@
       <button id="resetBtn">Reiniciar Juego</button>
     </section>
 
-<section class="result-section">
-  <h2>Resultado (bug con dados y resultados)</h2>
-  <div class="dice-container">
-    <div class="dice-3d">
-      <div class="die" id="die1">
-        <div class="face front">1</div>
-        <div class="face back">6</div>
-        <div class="face right">4</div>
-        <div class="face left">3</div>
-        <div class="face top">5</div>
-        <div class="face bottom">2</div>
+    <section class="result-section">
+      <h2>Resultado</h2>
+      <div class="dice">
+        <img id="die1Img" src="images/lado1.png" alt="Dado 1">
+        <img id="die2Img" src="images/lado1.png" alt="Dado 2">
       </div>
-      <div class="die" id="die2">
-        <div class="face front">1</div>
-        <div class="face back">6</div>
-        <div class="face right">4</div>
-        <div class="face left">3</div>
-        <div class="face top">5</div>
-        <div class="face bottom">2</div>
-      </div>
-    </div>
-  </div>
-  <p id="resultText"></p>
-</section>
+      <p id="resultText"></p>
+    </section>
 
     <section class="stats-section">
       <h2>Estadísticas</h2>
@@ -95,6 +80,12 @@
     <section class="warning">
       <p><strong>⚠️ Advertencia:</strong> Aunque parezca que podés ganar, este juego siempre favorece a la banca. A largo plazo, ¡perdés más de lo que ganás! 📉</p>
     </section>
+
+    <div class="grupo-banner">
+      <img src="https://media.giphy.com/media/sIIhZliB2McAo/giphy.gif" alt="Nyan Cat">
+      Grupo 1 - Comisión A (el mejor :v)
+            <img src="https://media.giphy.com/media/sIIhZliB2McAo/giphy.gif" alt="Nyan Cat">
+    </div>
   </main>
 
   <script src="js/game.js"></script>

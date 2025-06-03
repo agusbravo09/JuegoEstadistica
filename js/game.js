@@ -7,8 +7,8 @@ const exactBetType = document.getElementById("exactBetType");
 const betSectionTitle = document.getElementById("betSectionTitle");
 const totalBetSection = document.getElementById("totalBetSection");
 const exactBetSection = document.getElementById("exactBetSection");
-const die1 = document.getElementById("die1");
-const die2 = document.getElementById("die2");
+const die1Img = document.getElementById("die1Img");
+const die2Img = document.getElementById("die2Img");
 
 // Estadísticas
 let stats = {
@@ -25,7 +25,7 @@ updateStats();
 // Manejadores de tipo de apuesta
 totalBetType.addEventListener("change", () => {
   if (totalBetType.checked) {
-    betSectionTitle.textContent = "Haz tu apuesta por total";
+    betSectionTitle.textContent = "Hacé tu apuesta por total";
     totalBetSection.style.display = "block";
     exactBetSection.style.display = "none";
   }
@@ -33,7 +33,7 @@ totalBetType.addEventListener("change", () => {
 
 exactBetType.addEventListener("change", () => {
   if (exactBetType.checked) {
-    betSectionTitle.textContent = "Haz tu apuesta exacta";
+    betSectionTitle.textContent = "Hacé tu apuesta exacta";
     totalBetSection.style.display = "none";
     exactBetSection.style.display = "block";
   }
@@ -63,20 +63,6 @@ function biasedRoll(multiplier = 0.3) {
   }
   return [rollDie(), rollDie()];
 }
-
-function rotateDie(dieElement, value) {
-  const rotations = {
-    1: "rotateX(0deg) rotateY(0deg)",        // front (1)
-    2: "rotateX(-90deg) rotateY(0deg)",      // bottom (2)
-    3: "rotateY(-90deg) rotateX(0deg)",      // left (3)
-    4: "rotateY(90deg) rotateX(0deg)",       // right (4)
-    5: "rotateX(90deg) rotateY(0deg)",       // top (5)
-    6: "rotateX(180deg) rotateY(0deg)"       // back (6)
-  };
-
-  dieElement.style.transform = rotations[value];
-}
-
 
 function updateStats(win, reward) {
   if (win !== undefined && reward !== undefined) {
@@ -126,9 +112,6 @@ rollBtn.addEventListener("click", () => {
     return;
   }
 
-  // Animación de lanzamiento
-  die1.classList.add("rolling");
-  die2.classList.add("rolling");
   rollBtn.disabled = true;
   resultText.textContent = "Los dados están girando...";
 
@@ -136,15 +119,13 @@ rollBtn.addEventListener("click", () => {
     const [die1Result, die2Result] = biasedRoll(0.3);
     const total = die1Result + die2Result;
 
-    // Detener animación y mostrar resultado
-    die1.classList.remove("rolling");
-    die2.classList.remove("rolling");
-    rotateDie(die1, die1Result);
-    rotateDie(die2, die2Result);
+    // Mostrar las imágenes correctas
+    die1Img.src = `images/lado${die1Result}.png`;
+    die2Img.src = `images/lado${die2Result}.png`;
 
     let result = `Salió ${die1Result} y ${die2Result} (Total: ${total}). `;
     let win = false;
-    let reward = -1; // Costo base por jugar
+    let reward = -1; // Apuesta perdida
 
     if (isTotalBet && total === totalBet) {
       reward = 5;
@@ -161,14 +142,14 @@ rollBtn.addEventListener("click", () => {
     resultText.textContent = result;
     updateStats(win, reward);
     rollBtn.disabled = false;
-  }, 1500);
+  }, 1000);
 });
 
 // Reinicio del juego
 resetBtn.addEventListener("click", () => {
   stats = { balance: 100, plays: 0, wins: 0, bestBalance: 100, expectedValue: -0.5 };
   resultText.textContent = "Juego reiniciado. ¡Buena suerte!";
-  rotateDie(die1, 1);
-  rotateDie(die2, 1);
+  die1Img.src = "images/lado1.png";
+  die2Img.src = "images/lado1.png";
   updateStats();
 });
