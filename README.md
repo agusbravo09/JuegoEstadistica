@@ -23,8 +23,8 @@ Un simulador interactivo que demuestra estadísticamente cómo los juegos de aza
 
 *"Un dream team que hizo perder más del 85% de las pruebas beta (como debe ser)"*  
 
-💡 **Dato curioso**: Cada rol fue asignado basado en un riguroso proceso de... *"uh, tú haz esto que se te da bien"* (mirá como me fallo chatgpt).
-*"Toda apuesta es un ejercicio de fe... excepto esta, que es un ejercicio de demostración"*
+💡 **Dato curioso**: Cada rol fue asignado basado en un riguroso proceso de... *"uh, tú haz esto que se te da bien"* (mirá como me fallo chatgpt). <br>
+*"Toda apuesta es un ejercicio de fe... excepto esta, que es un ejercicio de demostración"* <br>
 ***Jugar compulsivamente puede afectar la salud (pero en este caso no xd)***
 
 ## 🔥 Características Destacadas
