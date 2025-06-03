@@ -311,18 +311,19 @@ button:active {
 }
 
 .nyan-cat {
-  height: 1.8em;
+  height: 2em;
   width: auto;
-  border-radius: 4px;
   transform: translateY(2px);
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
 
+#left_cat{
+  transform: scaleX(-1);
+}
+
 .grupo-banner img {
-  height: 3em;
+  height: 4em;
   vertical-align: middle;
-  margin-right: 8px;
-  border-radius: 4px;
 }
 
 @keyframes bannerGradient {
